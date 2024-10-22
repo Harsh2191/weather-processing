@@ -31,6 +31,22 @@ function WeatherDisplay() {
     const [humidityThreshold, setHumidityThreshold] = useState(65);
     const [windSpeedThreshold, setWindSpeedThreshold] = useState(8);
     const [selectedParameter, setSelectedParameter] = useState('temperature');
+    const [unit, setUnit] = useState('C'); // Default to Celsius ('C' or 'F')
+
+    // Other state variables...
+
+    // Conversion Functions
+    const toFahrenheit = (celsius) => (celsius * 9/5) + 32;
+    
+    const convertTemperature = (temp) => {
+        return unit === 'F' ? toFahrenheit(temp).toFixed(2) : temp;
+    };
+
+    const unitLabel = unit === 'C' ? '°C' : '°F';
+
+    const toggleUnit = () => {
+        setUnit(prevUnit => prevUnit === 'C' ? 'F' : 'C');
+    };
 
     // Fetch current weather
     const fetchWeather = async (city) => {
@@ -137,18 +153,18 @@ function WeatherDisplay() {
         labels: dailySummary ? dailySummary.map(summary => new Date(summary.date).toLocaleDateString()) : [],
         datasets: [
             {
-                label: 'Average Temperature (°C)',
-                data: dailySummary ? dailySummary.map(summary => summary.averageTemperature) : [],
+                label: `Average Temperature (${unitLabel})`,
+                data: dailySummary ? dailySummary.map(summary =>convertTemperature( summary.averageTemperature)) : [],
                 backgroundColor: 'rgba(75, 192, 192, 0.6)',
             },
             {
-                label: 'Max Temperature (°C)',
-                data: dailySummary ? dailySummary.map(summary => summary.maxTemperature) : [],
+                label: `Max Temperature (${unitLabel})`,
+                data: dailySummary ? dailySummary.map(summary => convertTemperature( summary.maxTemperature)) : [],
                 backgroundColor: 'rgba(255, 99, 132, 0.6)',
             },
             {
-                label: 'Min Temperature (°C)',
-                data: dailySummary ? dailySummary.map(summary => summary.minTemperature) : [],
+                label: `Min Temperature (${unitLabel})`,
+                data: dailySummary ? dailySummary.map(summary => convertTemperature(summary.minTemperature)) : [],
                 backgroundColor: 'rgba(153, 102, 255, 0.6)',
             },
         ],
@@ -160,8 +176,8 @@ function WeatherDisplay() {
         
         datasets: [
             {
-                label: 'Global Summary (°C)',
-                data: [globalSummary.map(summary => summary.maxTemperature), globalSummary.map(summary => summary.minTemperature)],
+                label: `Global Summary (${unitLabel})`,
+                data: [globalSummary.map(summary => convertTemperature(summary.maxTemperature)), globalSummary.map(summary => convertTemperature(summary.minTemperature))],
                 backgroundColor: ['rgba(255, 99, 132, 0.6)', 'rgba(75, 192, 192, 0.6)'],
             },
         ],
@@ -170,7 +186,15 @@ function WeatherDisplay() {
     return (
         
         <div className="container mx-auto p-8 bg-gradient-to-r from-blue-100 via-purple-200 to-pink-100 rounded-lg shadow-xl">
-        <h1 className="text-4xl font-bold mb-6 text-center text-indigo-800">Weather Dashboard</h1>
+            <div className="flex justify-evenly items-center mb-6">
+                <h1 className="text-4xl font-bold text-indigo-800">Weather Dashboard</h1>
+                <button 
+                    className="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 transition-all"
+                    onClick={toggleUnit}
+                >
+                    Switch to {unit === 'C' ? 'Fahrenheit' : 'Celsius'}
+                </button>
+            </div>
     
         {/* Input Section */}
         <div className="grid grid-cols-2 gap-8 mb-8">
@@ -210,8 +234,8 @@ function WeatherDisplay() {
                 {weatherData && (
                     <div>
                         <h2 className="text-2xl font-bold text-purple-700">{weatherData.city} Current Weather</h2>
-                        <p className="text-lg mt-4 text-gray-600">Temperature: {weatherData.temperature} °C</p>
-                        <p className="text-lg text-gray-600">Feels Like: {weatherData.feels_like} °C</p>
+                        <p className="text-lg mt-4 text-gray-600">Temperature: {convertTemperature(weatherData.temperature)} {unitLabel}</p>
+                        <p className="text-lg text-gray-600">Feels Like: {convertTemperature(weatherData.feels_like)} {unitLabel}</p>
                         <p className="text-lg text-gray-600">Humidity: {weatherData.humidity} %</p>
                         <p className="text-lg text-gray-600">Wind Speed: {weatherData.wind_speed} km/h</p>
                         <p className="text-lg text-gray-600">Weather: {weatherData.main}</p>
@@ -241,10 +265,10 @@ averageWindSpeed.toFixed(2))} Km/h</p>
                 {globalSummary && globalChartData && (
                     <div>
                         <h2 className="text-2xl font-bold text-purple-700">Global Summary</h2>
-                        <p className="mt-4 text-lg text-gray-600">Max Temp: {globalSummary.map(summary => summary.maxTemperature)} °C (City: {globalSummary.map(summary => summary.maxTemperatureCity)})</p>
-                        <p className="text-lg text-gray-600">Min Temp: {globalSummary.map(summary => summary.minTemperature)} °C (City: {globalSummary.map(summary => summary.minTemperatureCity)})</p>
+                        <p className="mt-4 text-lg text-gray-600">Max Temp: {globalSummary.map(summary => convertTemperature(summary.maxTemperature))} {unitLabel} (City: {globalSummary.map(summary => summary.maxTemperatureCity)})</p>
+                        <p className="text-lg text-gray-600">Min Temp: {globalSummary.map(summary => convertTemperature(summary.minTemperature))} {unitLabel} (City: {globalSummary.map(summary => summary.minTemperatureCity)})</p>
                         <p className="text-lg text-gray-600">Dominant Weather Condition: {globalSummary.map(summary => summary.dominantWeather)}</p>
-                        <p className="text-lg text-gray-600">Average Temp of All Cities: {globalSummary.map(summary => summary.averageTemperature.toFixed(2))} °C</p>
+                        <p className="text-lg text-gray-600">Average Temp of All Cities: {globalSummary.map(summary =>  convertTemperature( summary.averageTemperature.toFixed(2)))} {unitLabel}</p>
     
                         {/* Reduced Pie chart size */}
                         <div className="mt-6 mx-auto" style={{ width: '300px', height: '300px' }}>
