@@ -59,4 +59,48 @@ The backend is built using Node.js and Express, and it exposes the following RES
 - **globalsummary schema**: Aggregates the maximum, minimum, and average weather statistics along with the dominant weather condition for all cities.
 
 
+## How to Run Locally
+
+Follow these steps to run the Rule Engine project locally on your machine.
+
+### Prerequisites
+
+- Node.js (v14+)
+- MongoDB (For storing the rules)
+- Git (For cloning the repository)
+- A package manager (npm or yarn)
+
+### Backend Setup
+
+1. **Clone the Repository**
+
+   Clone the project repository to your local machine:
+
+   ```bash
+   git clone https://github.com/Harsh2191/weather-processing
+2 .Navigate to the Backend Directory
+
+    cd backend
+3. Install Dependencies
+   **npm install express nodemon mongoose dotenv cors**
+4. Set Up Environment Variables
+   **mongodb=url of your database**
+    **,  PORT=5000**
+5. Start the Backend Server
+   **npm start**
+6. The backend server will be running on **http://localhost:5000**
+### Frontend setup
+1. Navigate to the Frontend Directory
+   **cd frontend/weather-ui**
+
+2. Install Dependencies
+   **npm install axios notistack react-chartjs-2**
+3. TailwindCSS Setup
+   **npm install -D tailwindcss postcss autoprefixer**
+   **,  npx tailwindcss init -p**
+4. Start the Frontend Application
+    **npm run dev**
+5.  The frontend server will be running on **http://localhost:5173**
+
+
 
