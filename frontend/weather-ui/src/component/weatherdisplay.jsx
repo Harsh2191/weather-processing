@@ -14,6 +14,8 @@ import {
     ArcElement,
 } from 'chart.js';
 
+import { baseUrl } from '../urls';
+
 // Register necessary components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
@@ -33,7 +35,7 @@ function WeatherDisplay() {
     // Fetch current weather
     const fetchWeather = async (city) => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/weather/${city}`);
+            const response = await axios.get(`${baseUrl}/api/weather/${city}`);
             const cityWeather = response.data[0];
             setWeatherData(cityWeather);
             checkThreshold(cityWeather);
@@ -46,7 +48,7 @@ function WeatherDisplay() {
     // Fetch daily summary
     const fetchDailySummary = async (city) => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/daily-summary/${city}`);
+            const response = await axios.get(`${baseUrl}/api/daily-summary/${city}`);
             setDailySummary(response.data);
         } catch (error) {
             console.error('Error fetching daily summaries:', error);
@@ -57,7 +59,7 @@ function WeatherDisplay() {
     // Fetch global summary
     const fetchGlobalSummary = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/global-summary`);
+            const response = await axios.get(`${baseUrl}/api/global-summary`);
             setGlobalSummary(response.data);
         } catch (error) {
             console.error('Error fetching global summaries:', error);
