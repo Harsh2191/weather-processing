@@ -6,7 +6,7 @@ The **Weather Monitoring Application** is a real-time data processing system des
 
 ## Deployed Application
 
-You can access the deployed application at the following link: [Live Link](https://weather-processing-frontend.vercel.app/) (replace with actual link).
+You can access the  running application at the following link: [Live Link](https://weather-processing-frontend.vercel.app/) 
 
 ## Features
 
@@ -14,7 +14,7 @@ You can access the deployed application at the following link: [Live Link](https
 - **City Selection**: Users can select one of the six metro cities to view the corresponding weather data.
 - **Threshold Parameters**: Users can configure threshold parameters for temperature, wind speed, and humidity. Notifications are displayed when current weather conditions exceed these thresholds.
 - **Current Weather Dashboard**: Displays current weather data, including temperature, perceived temperature (feels like), humidity, wind speed, and dominant weather condition.
-- **Daily Weather Summary**: Fetches and displays daily summary data for each city, showing average, maximum, and minimum temperatures, along with the dominant weather condition.
+- **Daily Weather Summary**: Fetches and displays daily summary after performing rollups/ aggregates on  data for each city, showing average, maximum, and minimum temperatures, averagehumidity , averagewindspeed along with the dominant weather condition.
 - **user preference**: user can toggle between the temperature between celsius and fahrenheit
 - **Visualizations**: 
   - Displays daily weather summaries using charts.
@@ -23,22 +23,21 @@ You can access the deployed application at the following link: [Live Link](https
 ### Bonus Features
 - **Rollups and Aggregates**: Implemented rollups and aggregates for average wind speed and average humidity.
 - **Auto-Refresh**: The frontend fetches current weather data from the backend at a specific interval of 5 minutes.
-- **Global Summary**: Shows a global summary of the weather conditions, including maximum temperature, minimum temperature, average temperature, dominant weather condition, and the corresponding city name.
+
 
 ### Additional Features
-- **Auto-Refresh**: The frontend fetches current weather data from the backend at a specific interval of 5 minutes.
 -  **Global Summary**: Shows a global summary of the weather conditions, including maximum temperature, minimum temperature, average temperature, dominant weather condition, and the corresponding city name
 
 ## Frontend Architecture
 
-The frontend is built using React.js and includes the following key functionalities and features:
+The frontend is built using **React.js , Tailwindcss** and includes the following key functionalities and features:
 - **User Interface**: Provides inputs for selecting cities and setting threshold parameters and value.
 - **Data Visualization**: Utilizes libraries like Chart.js or Recharts for visualizing weather data.
 - **Notifications**: Alerts users when thresholds are breached, displayed in a user-friendly manner.
 
 ## Backend Architecture
 
-The backend is built using Node.js and Express, and it exposes the following REST APIs:
+The backend is built using **Node.js** and **Express**, and it exposes the following REST APIs:
 
 ### REST APIs
 1. **Current Weather API**: Fetches current weather data for the selected city.
