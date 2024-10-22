@@ -34,6 +34,7 @@ The frontend is built using **React.js , Tailwindcss** and includes the followin
 - **User Interface**: Provides inputs for selecting cities and setting threshold parameters and value.
 - **Data Visualization**: Utilizes libraries like Chart.js or Recharts for visualizing weather data.
 - **Notifications**: Alerts users when thresholds are breached, displayed in a user-friendly manner.
+- Main frontend file: `weatherdisplay.jsx` (located in `frontend/weather-ui/src/component/weatherdisplay.jsx`).
 
 ## Backend Architecture
 
