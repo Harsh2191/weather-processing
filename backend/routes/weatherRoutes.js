@@ -58,25 +58,34 @@ router.get('/global-summary', async (req, res) => {
 
 
 
-
 cron.schedule('*/5 * * * *', async () => {
     console.log('Fetching weather data every 5 minutes...');
-    const weatherData = await fetchWeatherData(defaultCities);
 
-    // Update or create daily summaries for each city
-    weatherData.forEach(async (data) => {
-        if (data) {
-            await updateOrCreateDailySummary(data);
-        }
-    });
+    try {
+        const weatherData = await fetchWeatherData(defaultCities); // Fetch weather data for all default cities
 
-    // Update or create the global summary
-    const validData = weatherData.filter(data => data !== null);
-    if (validData.length === defaultCities.length) {
-        await updateOrCreateGlobalSummary(validData);
+        // Run both tasks (updating city summaries and global summary) concurrently using Promise.all
+        const updateCities = weatherData.map(async (data) => {
+            if (data) {
+                await updateOrCreateDailySummary(data); // Update or create daily summary for each city
+            }
+        });
+
+        // Filter valid data for the global summary
+        const validData = weatherData.filter(data => data !== null);
+
+        // Combine updating cities and updating the global summary in parallel
+        await Promise.all([
+            Promise.all(updateCities),  // Update all city summaries concurrently
+            updateOrCreateGlobalSummary(validData)  // Update global summary concurrently
+        ]);
+
+        console.log('Weather data and global summary updated successfully.');
+
+    } catch (error) {
+        console.error('Error occurred during cron job execution:', error);
     }
 });
-
 
 // Export the router using CommonJS syntax
 module.exports = router;

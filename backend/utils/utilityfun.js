@@ -11,7 +11,7 @@ const GlobalSummary = require('../models/GlobalSummary')
 // Utility function to get weather data for cities
 const fetchWeatherData = async (cities) => {
   return Promise.all(cities.map(async (city) => {
-      console.log('Request Parameters:', { q: city, appid: API_KEY, units: 'metric' });
+    
 
       try {
           const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather`, {
@@ -21,7 +21,7 @@ const fetchWeatherData = async (cities) => {
                   units: 'metric',
               },
           });
-          console.log(`Successfully fetched data for ${city}:`, response.data);
+         
           return {
               city: response.data.name,
               temperature: response.data.main.temp,
