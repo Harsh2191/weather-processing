@@ -234,11 +234,13 @@ function WeatherDisplay() {
                 {weatherData && (
                     <div>
                         <h2 className="text-2xl font-bold text-purple-700">{weatherData.city} Current Weather</h2>
-                        <p className="text-lg mt-4 text-gray-600">Temperature: {convertTemperature(weatherData.temperature)} {unitLabel}</p>
-                        <p className="text-lg text-gray-600">Feels Like: {convertTemperature(weatherData.feels_like)} {unitLabel}</p>
-                        <p className="text-lg text-gray-600">Humidity: {weatherData.humidity} %</p>
-                        <p className="text-lg text-gray-600">Wind Speed: {weatherData.wind_speed} km/h</p>
-                        <p className="text-lg text-gray-600">Weather: {weatherData.main}</p>
+<p className="text-lg mt-4 text-gray-600">Temperature: {convertTemperature(weatherData.temperature)} {unitLabel}</p>
+<p className="text-lg text-gray-600">Feels Like: {convertTemperature(weatherData.feels_like)} {unitLabel}</p>
+<p className="text-lg text-gray-600">Humidity: {weatherData.humidity} %</p>
+<p className="text-lg text-gray-600">Wind Speed: {weatherData.wind_speed} km/h</p>
+<p className="text-lg text-gray-600">Weather: {weatherData.main}</p>
+<p className="text-lg font-semibold text-purple-600">Date: {new Date(weatherData.dt * 1000).toLocaleString()}</p>
+
                     </div>
                 )}
             </div>
